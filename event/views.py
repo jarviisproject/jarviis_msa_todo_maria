@@ -18,13 +18,12 @@ def event_all(request):
         return Response(data=serializer.data)
 
     elif request.method == 'POST':
-        new_event = request.data
-        serializer = EventSerializer(data=new_event)
+        serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response({'result': f'Welcome,{serializer.data.get("id")}'}, status=201)
 
-    return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 # @parser_classes([JSONParser])
@@ -40,12 +39,9 @@ def event_by_id(request, id):
 
     elif request.method == 'PUT':
         serializer = EventSerializer(instance=event, data=request.data)
-        ic(event, request.data)
-
-        print(serializer.is_valid())
         if serializer.is_valid():
             serializer.save()
-            return Response({'result': f'Welcome,{serializer.data.get("id")}'}, status=201)
+            return Response({'result': f'<ID_{serializer.data.get("id")}: {serializer.data.get("title")}> 수정완료'}, status=201)
         
     elif request.method =='POST':
         serializer = EventSerializer(event)

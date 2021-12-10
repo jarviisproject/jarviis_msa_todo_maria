@@ -25,7 +25,7 @@ class Event(models.Model):
     end = models.DateTimeField()
     location = models.CharField(max_length=50)
     completion = models.CharField(max_length=30)
-    description = models.TextField(blank=True)
+    description = models.TextField(null=True)
 
     def __str__(self):
         return self.title

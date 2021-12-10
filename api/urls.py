@@ -19,4 +19,5 @@ import event
 
 urlpatterns = [
     path('api/event/', include('event.urls')),
+    path('api/suggestion/', include('suggestion.urls')),
 ]
