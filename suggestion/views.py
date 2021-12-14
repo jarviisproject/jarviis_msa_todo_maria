@@ -1,4 +1,3 @@
-
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -7,6 +6,22 @@ from rest_framework.response import Response
 from suggestion.models import SuggestionEvent
 from suggestion.serializer import SuggsetionSerializer as Serializer
 from icecream import ic
+
+def index(request):
+    print(request.session.session_key)
+    request.session['test'] = "hahaha"
+    return render(request, 'index.html')
+
+def result(request):
+    session_id = request.session.session_key
+    test = request.session['test']
+
+    contents = {
+        'session_id': session_id,
+        'test': test
+    }
+    return Response(contents)
+
 
 @api_view(['GET', 'POST'])
 def suggestion_all(request):

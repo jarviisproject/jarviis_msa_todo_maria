@@ -84,12 +84,23 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'jarviis',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
+        'USER': 'admin',
+        'PASSWORD': 'passw0rd',
+        'HOST': 'jarviis-mariadb.ctaw5sasgom3.ap-northeast-2.rds.amazonaws.com',
         'PORT': '3306'
     }
 }
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'jarviis',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': '127.0.0.1',
+#         'PORT': '3306'
+#     }
+# }
 
 
 # Password validation
