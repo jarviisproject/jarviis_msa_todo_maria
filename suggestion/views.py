@@ -4,23 +4,32 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from suggestion.models import SuggestionEvent
+from suggestion.process import SuggestionProcess
 from suggestion.serializer import SuggsetionSerializer as Serializer
 from icecream import ic
 
 def index(request):
-    print(request.session.session_key)
+    ic(request.session.session_key)
+    try:
+        ic(request.session['user'])
+    except KeyError:
+        print('키 에러1')
+    request.session['user'] = 1
+    ic('-'*100)
+    try:
+        ic(request.session['user'])
+    except KeyError:
+        print('키 에러2')
     request.session['test'] = "hahaha"
+    ic(request.session['test'])
     return render(request, 'index.html')
 
-def result(request):
-    session_id = request.session.session_key
-    test = request.session['test']
 
-    contents = {
-        'session_id': session_id,
-        'test': test
-    }
-    return Response(contents)
+@api_view(['GET'])
+def suggestion(request):
+    
+    rand_id = SuggestionProcess().get_random_event()
+
 
 
 @api_view(['GET', 'POST'])

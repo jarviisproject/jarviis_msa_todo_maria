@@ -9,5 +9,4 @@ urlpatterns = [
     path('update/<int:id>', views.suggestion_by_id),
     path('delete/<int:id>', views.suggestion_by_id),
     path('', views.index),
-    path('result', views.result)
 ]
