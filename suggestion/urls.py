@@ -1,5 +1,4 @@
 from django.urls import path, re_path
-
 from suggestion import views
 
 urlpatterns = [
@@ -8,5 +7,9 @@ urlpatterns = [
     path('read/<int:id>', views.suggestion_by_id),
     path('update/<int:id>', views.suggestion_by_id),
     path('delete/<int:id>', views.suggestion_by_id),
-    path('', views.index),
+    path('user/<int:user_id>', views.suggestion_user),
+    path('user/test/<int:user_id>', views.suggestion_user_test),
+    path('accept', views.suggestion_accept),
+    path('reject', views.suggestion_reject),
+    # path('', views.index),
 ]

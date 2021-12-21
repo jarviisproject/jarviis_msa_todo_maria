@@ -21,9 +21,20 @@ def event_all(request):
         serializer = EventSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'result': f'Welcome,{serializer.data.get("id")}'}, status=201)
+            return Response(data=serializer.data, status=201)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET'])
+def event_by_user(request, user_id):
+    try:
+        event = Event.objects.filter(user_id=user_id)
+    except Event.DoesNotExist:
+        return Response({'message':'Event_DoesNotExis'}, status=status.HTTP_404_NOT_FOUND)
+    serializer = EventSerializer(event, many=True)
+    return Response(data=serializer.data, status=201)
+
 
 @api_view(['GET', 'POST', 'PUT', 'DELETE'])
 # @parser_classes([JSONParser])
@@ -35,7 +46,7 @@ def event_by_id(request, id):
 
     if request.method =='GET':
         serializer = EventSerializer(event)
-        return Response({'result': serializer.data}, status=201)
+        return Response(data=serializer.data, status=201)
 
     elif request.method == 'PUT':
         serializer = EventSerializer(instance=event, data=request.data)

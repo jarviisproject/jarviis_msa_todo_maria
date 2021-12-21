@@ -1,5 +1,6 @@
 from django.db import models
 from event.models import User
+from suggestion.models import SuggestionEvent
 
 
 class Satisfaction(models.Model):
@@ -7,6 +8,7 @@ class Satisfaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
+    title = models.TextField(null=True)
     type = models.CharField(max_length=30)
     result = models.CharField(max_length=30)
     #accept #reject
