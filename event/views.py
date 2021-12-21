@@ -66,10 +66,12 @@ def event_by_id(request, id):
 
 @api_view(['GET'])
 def event_by_time(request, date):
+    ic(date)
     try:
-        event = Event.objects.filter(Q(start__lte=date)|Q(end__gte=date)).order_by("id")
+        event = Event.objects.filter(Q(start__lte=date)&Q(end__gte=date))
     except Event.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    ic(event)
     serializer = EventSerializer(event, many=True)
     return Response(data = serializer.data)
 

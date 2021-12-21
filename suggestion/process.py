@@ -72,10 +72,8 @@ class SuggestionProcess:
                 "user_id": user_id,
                 "contents": routine['contents'],
                 "location": routine['location'],
-
                 "routine":ko_days,
                 "start": date,
-                "end": 'null',
                 "type": "ROUTINE",
             })
         return suggestions
@@ -121,7 +119,6 @@ class SuggestionProcess:
                 "location": routine['location'],
                 "routine":ko_days,
                 "start": date,
-                "end": routine['description'],
                 "type": "ROUTINE",
             })
         return suggestions
