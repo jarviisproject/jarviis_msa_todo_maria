@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render
 from rest_framework import status
 from rest_framework.decorators import api_view
@@ -93,6 +94,6 @@ def suggestion_accept(request):
 @api_view(['POST'])
 def suggestion_reject(request):
     SatisfactionProcess().suggestion(request.data, "Reject")
-    return Response(data=request.data, status=201)
-
-
+    url = f'http://서버:8000/api/routine/reject/{request.data["suggestion_id"]}'
+    requests.get(url)
+    return Response({'result':f'<{request.data["contents"]}> 거절'}, status=201)

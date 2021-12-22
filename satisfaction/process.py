@@ -11,5 +11,6 @@ class SatisfactionProcess(object):
         accept_data['result'] = result
         serializer = SatisfactionSerializer(data=accept_data)
         if serializer.is_valid():
-            serializer.save()
+            # serializer.save()
+            ic('SatisfactionProcess 유효성 검사')
         return serializer.data

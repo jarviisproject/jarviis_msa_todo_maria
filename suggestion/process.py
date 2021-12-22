@@ -45,6 +45,7 @@ class SuggestionProcess:
             if str(type(event.end)) != "<class 'NoneType'>":
                 end_day = event.end.strftime('%Y-%m-%d')
             suggestions.append({
+                "suggestion_id": event.id,
                 "user_id": user_id,
                 "contents": event.title,
                 "location": event.location,
@@ -70,6 +71,7 @@ class SuggestionProcess:
                     period -= 7
                 date.append(datetime.date.today() + datetime.timedelta(days=period))
             suggestions.append({
+                "suggestion_id": routine['id'],
                 "user_id": user_id,
                 "contents": routine['contents'],
                 "location": routine['location'],
@@ -93,6 +95,7 @@ class SuggestionProcess:
     #         if str(type(event.end)) != "<class 'NoneType'>":
     #             end_day = event.end.strftime('%Y-%m-%d')
     #         suggestions.append({
+    #             "suggestion_id": event.id,
     #             "user": user_id,
     #             "contents": event.title,
     #             "location": event.location,
@@ -118,6 +121,7 @@ class SuggestionProcess:
     #                 period -= 7
     #             date.append(datetime.date.today() + datetime.timedelta(days=period))
     #         suggestions.append({
+    #             "suggestion_id": routine['id'],
     #             "user": user_id,
     #             "contents": routine['title'],
     #             "location": routine['location'],
