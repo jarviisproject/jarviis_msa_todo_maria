@@ -1,11 +1,9 @@
 from django.shortcuts import render
-from icecream import ic
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
-from event.serializer import EventSerializer
-from satisfaction.serializer import SatisfactionSerializer
+from event.process import EventProcess
+from satisfaction.process import SatisfactionProcess
 from suggestion.models import SuggestionEvent
 from suggestion.process import SuggestionProcess
 from suggestion.serializer import SuggsetionSerializer as Serializer
@@ -79,30 +77,22 @@ def suggestion_user_test(request, user_id):
 @api_view(['POST'])
 def suggestion_accept(request):
     request_data = request.data
-    accept_data = {}
-    accept_data['title'] = request_data['contents']
-    accept_data['type'] = request_data['type']
-    accept_data['result'] = 'Accept'
-    serializer = SatisfactionSerializer(data=accept_data)
-    if serializer.is_valid():
-        ic(serializer.is_valid())
-        # serializer.save()
-    ic(accept_data)
-    event_data = {}
-    event_data['title'] = request_data['contents']
-    event_data['classification'] = request_data['classification']
-    event_data['type'] = request_data['type']
-    event_data['location'] = request_data['location']
-    event_data['start'] = request_data['start']
-    event_data['end'] = request_data['end']
-    serializer = EventSerializer(data=accept_data)
-    if serializer.is_valid():
-        ic(serializer.is_valid())
-        # serializer.save()
-    ic(event_data)
-    return Response(data=request.data, status=201)
+    event_process = EventProcess()
+    SatisfactionProcess().suggestion(request_data, "Accept")
+    if request_data['type'] == "SUGGESTION":
+        event_process.suggestion_event(request_data)
+        return Response({'result':f'<{request_data["contents"]}> 수락'})
+    if request_data['type'] == "ROUTINE":
+        event_process.routine_event(request_data)
+        return Response({'result':f'<{request_data["contents"]}> 수락'})
+
+    return Response({'message': 'Event_DoesNotExis'}, status=status.HTTP_404_NOT_FOUND)
+    # return Response({'result':f'{request_data[]}'}, status=201)
 
 
 @api_view(['POST'])
 def suggestion_reject(request):
+    SatisfactionProcess().suggestion(request.data, "Reject")
     return Response(data=request.data, status=201)
+
+

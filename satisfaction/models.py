@@ -5,7 +5,8 @@ from suggestion.models import SuggestionEvent
 
 class Satisfaction(models.Model):
     use_in_migrations = True
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.IntegerField()
     created = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
     title = models.TextField(null=True)

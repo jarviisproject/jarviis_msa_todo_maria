@@ -8,3 +8,4 @@ urlpatterns = [
     path('update/<int:id>', views.satisfaction_by_id),
     path('delete/<int:id>', views.satisfaction_by_id),
 ]
+

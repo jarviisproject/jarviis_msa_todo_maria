@@ -18,7 +18,9 @@ def event_all(request):
         return Response(data=serializer.data)
 
     elif request.method == 'POST':
-        serializer = EventSerializer(data=request.data)
+        request_data = request.data
+        request_data['type'] = 'user'
+        serializer = EventSerializer(data=request_data)
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data, status=201)

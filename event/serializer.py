@@ -6,11 +6,11 @@ from .models import Event as event
 from .models import User
 
 
-# class UserSerializer(serializers.ModelSerializer):
-#
-#     class Meta:
-#         model = User
-#         fields = '__all__'
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'
 
 
 class EventSerializer(serializers.ModelSerializer):

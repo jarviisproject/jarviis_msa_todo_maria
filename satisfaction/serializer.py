@@ -6,7 +6,7 @@ from .models import Satisfaction as satisfaction
 
 class SatisfactionSerializer(serializers.ModelSerializer):
 
-    user = serializers.SerializerMethodField()
+    # user = serializers.SerializerMethodField()
 
     class Meta:
         model = satisfaction
