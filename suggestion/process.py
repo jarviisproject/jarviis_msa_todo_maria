@@ -10,7 +10,7 @@ class SuggestionProcess:
         max_id = SuggestionEvent.objects.all().aggregate(max_id=Max("id"))['max_id']
         while True:
             pk = random.randint(1, max_id)
-            event = SuggestionEvent.objects.filter(pk=15)
+            event = SuggestionEvent.objects.filter(pk=pk)
             if event:
                 return event
 
@@ -44,6 +44,8 @@ class SuggestionProcess:
                 start_day = event.start.strftime('%Y-%m-%d')
             if str(type(event.end)) != "<class 'NoneType'>":
                 end_day = event.end.strftime('%Y-%m-%d')
+            else:
+                start_day = datetime.date.today()
             suggestions.append({
                 "suggestion_id": event.id,
                 "user_id": user_id,

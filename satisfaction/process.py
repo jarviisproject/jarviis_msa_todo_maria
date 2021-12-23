@@ -1,4 +1,3 @@
-from icecream import ic
 from satisfaction.serializer import SatisfactionSerializer
 
 
@@ -11,6 +10,5 @@ class SatisfactionProcess(object):
         accept_data['result'] = result
         serializer = SatisfactionSerializer(data=accept_data)
         if serializer.is_valid():
-            # serializer.save()
-            ic('SatisfactionProcess 유효성 검사')
+            serializer.save()
         return serializer.data
