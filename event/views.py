@@ -1,7 +1,6 @@
 from datetime import datetime, date
 from django.db.models import Q
 from django.http import JsonResponse
-from icecream import ic
 from rest_framework import status
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
@@ -68,12 +67,10 @@ def event_by_id(request, id):
 
 @api_view(['GET'])
 def event_by_time(request, date):
-    ic(date)
     try:
         event = Event.objects.filter(Q(start__lte=date)&Q(end__gte=date))
     except Event.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
-    ic(event)
     serializer = EventSerializer(event, many=True)
     return Response(data = serializer.data)
 
@@ -85,7 +82,6 @@ def event_by_title(request, title):
     except Event.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = EventSerializer(event, many=True)
-    ic(serializer.data)
     return Response(data = serializer.data)
 
 # @api_view(['PUT'])
