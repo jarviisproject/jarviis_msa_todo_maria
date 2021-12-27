@@ -27,7 +27,9 @@ class SuggestionProcess:
         # 현재 예시 서버
         # url = f'http://127.0.0.1:8000/api/event/user/{user_id}'
         #juu server
-        url = f'http://192.168.0.73:8000/api/routine/today_top10/{user_id}'
+        # url = f'http://192.168.0.73:8000/api/routine/today_top10/{user_id}'
+        # merge server
+        url = f'http://192.168.0.70:8001/api/routine/today_top10/{user_id}'
         response = requests.get(url)
         data = response.json()
         top3 = data[:3]
@@ -90,7 +92,7 @@ class SuggestionProcess:
 
     def get_top3_routine_test(self, user_id):
         # 현재 예시 서버
-        url = f'http://127.0.0.1:8000/api/event/user/{user_id}'
+        url = f'http://192.168.0.70:8000/api/event/user/{user_id}'
         response = requests.get(url)
         data = response.json()
         top3 = data[:3]
@@ -106,13 +108,15 @@ class SuggestionProcess:
                 start_day = event.start.strftime('%Y-%m-%d')
             if str(type(event.end)) != "<class 'NoneType'>":
                 end_day = event.end.strftime('%Y-%m-%d')
+            else:
+                start_day = datetime.date.today()
             suggestions.append({
                 "suggestion_id": event.id,
                 "user_id": user_id,
                 "contents": event.title,
                 "location": event.location,
                 "classification": event.classification,
-                "routine":"SUGGESTION",
+                "routine":None,
                 "start": start_day,
                 "end": end_day,
                 "type": "SUGGESTION"
@@ -140,7 +144,7 @@ class SuggestionProcess:
                 "classification":"ROUTINE",
                 "routine":ko_days,
                 "start": date,
-                "end" : '',
+                "end" : None,
                 "type": "ROUTINE",
             })
         return suggestions
