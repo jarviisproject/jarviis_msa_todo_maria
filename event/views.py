@@ -1,4 +1,4 @@
-from datetime import datetime, date
+import datetime
 from django.db.models import Q
 from django.http import JsonResponse
 from rest_framework import status
@@ -66,13 +66,14 @@ def event_by_id(request, id):
     return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET'])
-def event_by_time(request, date):
+def event_by_date(request, date):
+    date_test = datetime.datetime.strptime(date, '%Y-%m-%d')
     try:
-        event = Event.objects.filter(Q(start__lte=date)&Q(end__gte=date))
+        event = Event.objects.filter(Q(start__lte=date_test, end__gte=date_test) | Q(start=date_test, end__isnull=True))
     except Event.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = EventSerializer(event, many=True)
-    return Response(data = serializer.data)
+    return Response(data=serializer.data)
 
 
 @api_view(['GET'])
@@ -98,7 +99,6 @@ def event_by_title(request, title):
     #     serializer.save()
     #     return Response(data = serializer.data)
     # return JsonResponse(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 
 # @api_view(['POST'])

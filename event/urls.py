@@ -12,6 +12,6 @@ urlpatterns = [
     path('title/<str:title>', views.event_by_title),
     path('user/<int:user_id>', views.event_by_user),
     # path('patch/<int:id>', views.event_state),
-    path('date/<date>', views.event_by_time),
+    path('date/<date>', views.event_by_date),
     # re_path(r'date/(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$', views.event_by_time),
 ]

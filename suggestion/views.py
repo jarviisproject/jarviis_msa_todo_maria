@@ -81,11 +81,13 @@ def suggestion_accept(request):
     event_process = EventProcess()
     SatisfactionProcess().suggestion(request_data, "Accept")
     if request_data['type'] == "SUGGESTION":
-        event_process.suggestion_event(request_data)
-        return Response({'result':f'<{request_data["contents"]}> 수락'})
+        suggestion = event_process.suggestion_event(request_data)
+        suggestion
+        return Response(suggestion, status=201)
     if request_data['type'] == "ROUTINE":
-        event_process.routine_event(request_data)
-        return Response({'result':f'<{request_data["contents"]}> 수락'})
+        routine = event_process.routine_event(request_data)
+        routine
+        return Response(routine, status=201)
 
     return Response({'message': 'Event_DoesNotExis'}, status=status.HTTP_404_NOT_FOUND)
     # return Response({'result':f'{request_data[]}'}, status=201)

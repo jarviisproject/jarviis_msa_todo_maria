@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from event.serializer import EventSerializer
 
 
@@ -20,6 +21,7 @@ class EventProcess(object):
         serializer = EventSerializer(data=events, many=True)
         if serializer.is_valid():
             serializer.save()
+        return serializer.data
 
     def suggestion_event(self, request_data):
         event_data = {}
@@ -28,12 +30,13 @@ class EventProcess(object):
         event_data['classification'] = request_data['classification']
         event_data['type'] = request_data['type']
         event_data['location'] = request_data['location']
-        event_data['start'] = request_data['start']
+        event_data['start'] = f'{request_data["start"]} 00:00'
         event_data['end'] = request_data['end']
         serializer = EventSerializer(data=event_data)
         if serializer.is_valid():
             serializer.save()
         return serializer.data
+
 
 
 # class ScheduleTimeCheck(object):

@@ -92,7 +92,8 @@ class SuggestionProcess:
 
     def get_top3_routine_test(self, user_id):
         # 현재 예시 서버
-        url = f'http://192.168.0.70:8000/api/event/user/{user_id}'
+        # url = f'http://192.168.0.70:8000/api/event/user/{user_id}'
+        url = f'http://127.0.0.1:8000/api/event/user/{user_id}'
         response = requests.get(url)
         data = response.json()
         top3 = data[:3]
