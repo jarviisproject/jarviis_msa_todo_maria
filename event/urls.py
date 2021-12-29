@@ -7,7 +7,7 @@ urlpatterns = [
     # re_path(r'^detail/(?P<pk>[0-9]+)$', views.event_detail),
     path('read/<int:id>', views.event_by_id),
     path('update/<int:id>', views.event_by_id),
-    path('completion/<int:id>', views.event_by_id),
+    path('complete/<int:id>', views.event_by_id),
     path('delete/<int:id>', views.event_by_id),
     path('title/<str:title>', views.event_by_title),
     path('user/<int:user_id>', views.event_by_user),
