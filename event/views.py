@@ -1,11 +1,14 @@
 import datetime
 from django.db.models import Q
 from django.http import JsonResponse
+from icecream import ic
 from rest_framework import status
 from rest_framework.decorators import api_view, parser_classes
 from rest_framework.response import Response
 from event.models import Event
 from event.serializer import EventSerializer
+
+
 
 @api_view(['GET', 'POST'])
 # @parser_classes([JSONParser])
@@ -20,11 +23,15 @@ def event_all(request):
         request_data = request.data
         request_data['type'] = 'user'
         serializer = EventSerializer(data=request_data)
+        ic(request_data)
+        ic(serializer.is_valid())
         if serializer.is_valid():
             serializer.save()
             return Response(data=serializer.data, status=201)
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 
 @api_view(['GET'])
@@ -67,9 +74,9 @@ def event_by_id(request, id):
 
 @api_view(['GET'])
 def event_by_date(request, date):
-    date_test = datetime.datetime.strptime(date, '%Y-%m-%d')
+    date = datetime.datetime.strptime(date, '%Y-%m-%d')
     try:
-        event = Event.objects.filter(Q(start__lte=date_test, end__gte=date_test) | Q(start=date_test, end__isnull=True))
+        event = Event.objects.filter(Q(start__lte=date, end__gte=date) | Q(start=date, end__isnull=True))
     except Event.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     serializer = EventSerializer(event, many=True)

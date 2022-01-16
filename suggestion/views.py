@@ -26,6 +26,7 @@ from suggestion.serializer import SuggsetionSerializer as Serializer
 #     return render(request, 'index.html')
 
 
+
 @api_view(['GET', 'POST'])
 def suggestion_all(request):
     if request.method == 'GET':
